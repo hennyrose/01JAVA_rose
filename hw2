@@ -1,0 +1,77 @@
+```
+public class Main {
+
+	/**
+	 * Описать класс Треугольник. В качестве свойств возьмите длины сторон
+	 * треугольника. Реализуйте метод, который будет возвращать площадь этого
+	 * треугольника. Создайте несколько объектов этого класса и протестируйте их.
+	 */
+	
+	public static void main(String[] args) {
+
+		Area firsTriangle1 = new Area(8, 8, 4);
+		Area firsTriangle2 = new Area(4.5, 5, 6);
+
+		System.out.println(firsTriangle1.showArea());
+		System.out.println(firsTriangle2.showArea());
+
+	}
+
+}
+```
+```
+public class Area {
+
+	private double a;
+	private double b;
+	private double c;
+
+	public Area(double a, double b, double c) {
+		super();
+		this.a = a;
+		this.b = b;
+		this.c = c;
+	}
+
+	public Area() {
+
+	}
+
+	public double showArea() {
+		double p = (a + b + c) / 2;
+		double result = Math.sqrt(p * (p - a) * (p - b) * (p - c));
+		return result;
+
+	}
+
+	public double getA() {
+		return a;
+	}
+
+	public void setA(double a) {
+		this.a = a;
+	}
+
+	public double getB() {
+		return b;
+	}
+
+	public void setB(double b) {
+		this.b = b;
+	}
+
+	public double getC() {
+		return c;
+	}
+
+	public void setC(double c) {
+		this.c = c;
+	}
+
+	@Override
+	public String toString() {
+		return "Area [a=" + a + ", b=" + b + ", c=" + c + "]";
+	}
+
+}
+```
