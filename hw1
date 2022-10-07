@@ -1,0 +1,65 @@
+```
+public class Main {
+
+	public static void main(String[] args) {
+
+		Product iphone = new Product(1299, "smartphone, 512GB", 0.2);
+		Product lego = new Product(60, "construction toy", 0.7);
+		Product banana = new Product(2.7, "fruit", 0.12);
+
+		System.out.println(iphone.toString());
+		System.out.println(lego.toString());
+		System.out.println(banana.toString());
+
+	}
+
+}
+```
+```
+public class Product {
+
+	public double price;
+	public String description;
+	public double weight;
+
+	public Product(double price, String description, double weight) {
+		super();
+		this.price = price;
+		this.description = description;
+		this.weight = weight;
+	}
+
+	public Product() {
+
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	public String toString() {
+		return "description: " + description + ", price: " + price + " $, " + "weight: " + weight + " kg";
+	}
+
+}
+```
