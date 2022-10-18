@@ -1,0 +1,60 @@
+```
+public class Main {
+
+	public static void main(String[] args) {
+		Goods goods1 = new Goods(2.56, "milk in bootle", 0.9);
+		Goods goods2 = new Goods(1.90, "water in bootle", 5.0);
+		Goods goods3 = new Goods(3.50, "sweet cake", 0.5);
+
+		System.out.println(goods2);
+	}
+}
+```
+```
+public class Goods {
+	private double price;
+	private String description;
+	private double weight;
+	
+	
+	
+	public Goods(double price, String description, double weight) {
+		super();
+		this.price = price;
+		this.description = description;
+		this.weight = weight;
+	}
+
+	public Goods() {
+	}
+	
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+
+	@Override
+	public String toString() {
+		return "goods [price=" + price + ", description=" + description + ", weight=" + weight + "]";
+	}
+}
+```
