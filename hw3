@@ -1,0 +1,192 @@
+```
+public class Main {
+
+	public static void main(String[] args) {
+		Cat cat1 = new Cat("salmon", "black", 5, "Damian");
+		Dog dog1 = new Dog("beef", "black and white", 15, "Lenny");
+
+		System.out.println(cat1);
+		System.out.println(dog1);
+
+		System.out.println(cat1.getClass() + " " + cat1.getName() + " " + cat1.getVoice());
+		System.out.println(dog1.getClass() + " " + dog1.getName() + " " + dog1.getVoice());
+
+		Med vet = new Med("Peter Chamberlain");
+
+		vet.treatment(dog1);
+	}
+}
+```
+```
+public class Animal {
+	private String diet;
+	private String color;
+	private int weight;
+
+	public Animal(String diet, String color, int weight) {
+		super();
+		this.diet = diet;
+		this.color = color;
+		this.weight = weight;
+	}
+
+	public Animal() {
+		super();
+	}
+
+	public String getDiet() {
+		return diet;
+	}
+
+	public void setRation(String diet) {
+		this.diet = diet;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
+	public String getVoice() {
+		return "voice";
+	}
+
+	public void eat() {
+		System.out.println();
+	}
+
+	public void sleep() {
+		System.out.println();
+	}
+
+	@Override
+	public String toString() {
+		return "Animal [diet=" + diet + ", color=" + color + ", weight=" + weight + ", getVoice()=" + getVoice()
+				+ "]";
+	}
+}
+```
+```
+public class Med {
+	private String name;
+
+	public Med(String name) {
+		super();
+		this.name = name;
+	}
+	
+	public Med() {
+		super();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void treatment(Animal animal) {
+		System.out.println(name + " is treating " + animal);
+	}
+
+	@Override
+	public String toString() {
+		return "Vet [name=" + name + "]";
+	}
+}
+```
+```
+public class Cat extends Animal {
+	private String name;
+	
+	public Cat(String diet, String color, int weight, String name) {
+		super(diet, color, weight);
+		this.name = name;
+	}
+
+	public Cat () {
+		super();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getVoice() {
+		return "meows";
+	}
+	
+	public void eat() {
+		System.out.println("eating not many");
+	}
+	
+	public void sleep() {
+		System.out.println("sleeps a lot");
+	}
+
+	@Override
+	public String toString() {
+		return "Cat [name=" + name + ", getVoice()=" + getVoice() + ", getDiet()=" + getDiet() + ", getColor()="
+				+ getColor() + ", getWeight()=" + getWeight() + ", getClass()=" + getClass() + "]";
+	}
+
+	
+}
+```
+```
+public class Dog extends Animal {
+	private String name;
+		
+	public Dog(String diet, String color, int weight, String name) {
+		super(diet, color, weight);
+		this.name = name;
+	}
+
+	public Dog () {
+		super();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getVoice() {
+		return "barks";
+	}
+	
+	public void eat() {
+		System.out.println("eating many");
+	}
+	
+	public void sleep() {
+		System.out.println("sleeps quietly");
+	}
+
+	@Override
+	public String toString() {
+		return "Dog [name=" + name + ", getVoice()=" + getVoice() + ", getDiet()=" + getDiet() + ", getColor()="
+				+ getColor() + ", getWeight()=" + getWeight() + ", getClass()=" + getClass() + "]";
+	}
+}
+```
