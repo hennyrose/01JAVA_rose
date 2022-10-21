@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class FileService {
-
+// дублює файли окремого типу з однієї папки в іншу
 	public static long copyFile(File fileIn, File fileOut) throws IOException {
 		try (InputStream is = new FileInputStream(fileIn);
 				OutputStream os = new FileOutputStream(fileOut)) {
