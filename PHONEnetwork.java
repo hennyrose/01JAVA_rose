@@ -1,56 +1,36 @@
-public class Phone {
-	private String number;
-	private Network network;
+public class Network {
+	private Phone[] phonesList;
 
-	public Phone(String number) {
+	public Network(Phone[] phonesList) {
 		super();
-		this.number = number;
+		this.phonesList = phonesList;
 	}
 
-	public Phone() {
+	public Network(int a) {
+		phonesList = new Phone[a];
+	}
+
+	public Network() {
 		super();
 	}
 
-	public Network getNetwork() {
-		return network;
+	public Phone[] getPhonesList() {
+		return phonesList;
 	}
 
-	public void setNetwork(Network network) {
-		this.network = network;
+	public void setPhonesList(Phone[] phonesList) {
+		this.phonesList = phonesList;
 	}
 
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public void register(Network network) {
-		network.allPhone(this);
-		this.network = network;
-
-	}
-
-	public void call(String numb) {
-
-		for (Phone phone : network.getPhonesList()) {
-			if (phone != null && phone.number.equals(numb)) {
-				phone.incoming(number);
+	public void allPhone(Phone phone) {
+		for (int i = 0; i < phonesList.length; i++) {
+			if (phonesList[i] == null) {
+				phonesList[i] = phone;
+				System.out.print(phone.toString() + "registered ");
 				return;
+
 			}
+
 		}
-		System.out.println("\ncall failed " + numb + " phone is temporarily unavailable");
 	}
-
-	public void incoming(String num) {
-		System.out.print("\ncalling to: " + this.number + " from: " + num);
-	}
-
-	@Override
-	public String toString() {
-		return "num " + number;
-	}
-
 }
