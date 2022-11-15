@@ -1,4 +1,5 @@
 # 01JAVA_rose
+```
 castle(example): 
 enter the amount of spice:  (from 1 to 300)
 275
@@ -16,10 +17,9 @@ Lannister spending: 30.25
 Lannister total: 1053.79
 Messenger [house: Atreides, name: Ingvar, speed: 44.0 km/h, power: 140.0 delivery_time: 10.0 hrs]
 Messenger [house: Lannister, name: Peter, speed: 40.0 km/h, power: 90.0 delivery_time: 10.0 hrs]
-`
-`
-`
-`
+```
+```
 bigboom(example):
 DoubleCola{cola=1}
 [Penny, Kutrapalli, Volovitc, Leonard, Sheldon]
+```
