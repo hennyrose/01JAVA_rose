@@ -15,6 +15,7 @@ Atreides total: 1446.21
 Lannister income: 84.04
 Lannister spending: 30.25
 Lannister total: 1053.79
+dragon possibility: false
 Messenger [house: Atreides, name: Ingvar, speed: 44.0 km/h, power: 140.0 delivery_time: 10.0 hrs]
 Messenger [house: Lannister, name: Peter, speed: 40.0 km/h, power: 90.0 delivery_time: 10.0 hrs]
 ```
