@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class TradingGame {
+public class TradingGam {
 	public static void main(String[] args) {
 		Map<String, Integer> atreides = new HashMap<String, Integer>();
 		atreides.put("money", 1000);
@@ -60,83 +60,72 @@ public class TradingGame {
 			System.out.println("- " + rMap.get(2));
 			System.out.println("- " + rMap.get(3));
 			System.out.println("- " + rMap.get(4));
+			System.out.println("Choose a house to trade with: ( 2; 3; 4 ) ");
+			int houseChoice = scanner.nextInt();
 
-			int house1ResourceType = rand.nextInt(4) + 1;
-			int house1Resource = rand.nextInt(250) + 1;
-
-			System.out.println("Do you want to trade with another house? (y/n)");
-			String tradeAnswer = scanner.nextLine();
-
-			if (tradeAnswer.equalsIgnoreCase("y")) {
-				System.out.println("Which house do you want to trade with? (1/2/3)");
-				int house2Index = scanner.nextInt();
-				scanner.nextLine();
-				if (Arrays.binarySearch(houseKeys, house2Index) < 0) {
-					System.out.println("Invalid house number, try again.");
-					continue;
-				}
-
-				System.out.println("Which resource do you want to trade? (money/spice/iron/wood/food)");
-				String resourceType = scanner.nextLine();
-
-				if (!atreides.containsKey(resourceType)) {
-					System.out.println("Invalid resource type, try again.");
-					continue;
-				}
-
-				System.out.println("How much of this resource do you want to trade?");
-				int resourceAmount = scanner.nextInt();
-				scanner.nextLine();
-
-				int atreidesResourceAmount = atreides.get(resourceType);
-				int atreidesMoney = atreides.get("money");
-				int house2ResourceAmount = 0;
-				int house2Money = 0;
-				Map<String, Integer> house2Resources = null;
-
-				if (house2Index == 1) {
-					house2Resources = atreides;
-				} else if (house2Index == 2) {
-					house2Resources = harkonnen;
-				} else if (house2Index == 3) {
-					house2Resources = ferrari;
-				} else if (house2Index == 4) {
-					house2Resources = emperor;
-				}
-
-				if (resourceType.equals("money")) {
-					if (atreidesMoney >= resourceAmount) {
-						atreides.put("money", atreidesMoney - resourceAmount);
-						house2Resources.put("money", house2Resources.get("money") + resourceAmount);
-						System.out.println("Trade successful!");
-					} else {
-						System.out.println("Not enough money to make the trade.");
-					}
-				} else {
-					if (atreidesResourceAmount >= resourceAmount) {
-						int house2ResourceAmount2 = house2Resources.get(resourceType);
-						int atreidesMoney2 = atreides.get("money");
-						int house2Money2 = house2Resources.get("money");
-						int resourcePrice = rand.nextInt(50) + 1;
-						int totalCost = resourceAmount * resourcePrice;
-
-						if (atreidesMoney2 >= totalCost) {
-							atreides.put(resourceType, atreidesResourceAmount - resourceAmount);
-							house2Resources.put(resourceType, house2ResourceAmount2 + resourceAmount);
-							atreides.put("money", atreidesMoney2 - totalCost);
-							house2Resources.put("money", house2Money2 + totalCost);
-							System.out.println("Trade successful!");
-						} else {
-							System.out.println("Not enough money to make the trade.");
-						}
-					} else {
-						System.out.println("Not enough resources to make the trade.");
-					}
-				}
-			} else {
-				System.out.println("Goodbye!");
-				break;
+			if (Arrays.stream(houseKeys).noneMatch(x -> x == houseChoice) || houseChoice == 1) {
+				System.out.println("Invalid house choice, please choose again.");
+				continue;
 			}
+
+			String selectedHouse = cMap.get(houseChoice);
+
+			System.out.println("You have chosen to trade with " + selectedHouse);
+
+			Map<String, Integer> selectedHouseResources;
+
+			if (selectedHouse.equals("House Atreides")) {
+				selectedHouseResources = atreides;
+			} else if (selectedHouse.equals("House Harkonnen")) {
+				selectedHouseResources = harkonnen;
+			} else if (selectedHouse.equals("House Ferrari")) {
+				selectedHouseResources = ferrari;
+			} else {
+				selectedHouseResources = emperor;
+			}
+
+			System.out.println("Selected House Resources:");
+			System.out.println("- Money: " + selectedHouseResources.get("money"));
+			System.out.println("- Spice: " + selectedHouseResources.get("spice"));
+			System.out.println("- Iron: " + selectedHouseResources.get("iron"));
+			System.out.println("- Wood: " + selectedHouseResources.get("wood"));
+			System.out.println("- Food: " + selectedHouseResources.get("food"));
+
+			System.out.println("What resource do you want to trade? ( money; spice; iron; wood; food )");
+
+			String tradeResource = scanner.next();
+
+			if (!selectedHouseResources.containsKey(tradeResource)) {
+				System.out.println("Invalid resource choice, please choose again.");
+				continue;
+			}
+
+			System.out.println("Enter the amount to trade:");
+
+			int tradeAmount = scanner.nextInt();
+
+			if (tradeAmount > selectedHouseResources.get(tradeResource)) {
+				System.out.println("Selected house does not have enough of the selected resource.");
+				continue;
+			}
+
+			System.out.println("Confirm trade of " + tradeAmount + " " + tradeResource + " for "
+					+ (tradeAmount * rand.nextInt(50)) + " gold? (y/n)");
+
+			String confirmTrade = scanner.next();
+
+			if (confirmTrade.equals("y")) {
+
+				selectedHouseResources.put(tradeResource, selectedHouseResources.get(tradeResource) - tradeAmount);
+				atreides.put(tradeResource, atreides.get(tradeResource) + tradeAmount);
+				atreides.put("money", atreides.get("money") - (tradeAmount * rand.nextInt(50)));
+
+				System.out.println("Trade successful!");
+
+			} else {
+				System.out.println("Trade cancelled.");
+			}
+
 		}
 	}
 }
