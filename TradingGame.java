@@ -1,131 +1,241 @@
 import java.util.*;
+import javax.swing.*;
 
-public class TradingGam {
+public class TradingGameGUI {
+	private static Map<String, Integer> atreides = new HashMap<String, Integer>();
+	private static Map<String, Integer> harkonnen = new HashMap<String, Integer>();
+	private static Map<String, Integer> ferrari = new HashMap<String, Integer>();
+	private static Map<String, Integer> emperor = new HashMap<String, Integer>();
+	private static Map<Integer, String> cMap = new HashMap<Integer, String>();
+	private static Map<Integer, String> rMap = new HashMap<Integer, String>();
+	private static Scanner scanner = new Scanner(System.in);
+	private static Random rand = new Random();
+
+	private static JLabel resourcesLabel;
+	private static JLabel housesLabel;
+	private static JLabel dealsLabel;
+	private static JFrame frame;
+	private static JPanel panel;
+	private static JButton house2Button;
+	private static JButton house3Button;
+	private static JButton house4Button;
+	private static JTextArea console;
+
 	public static void main(String[] args) {
-		Map<String, Integer> atreides = new HashMap<String, Integer>();
 		atreides.put("money", 1000);
 		atreides.put("spice", 100);
 		atreides.put("iron", 50);
 		atreides.put("wood", 200);
 		atreides.put("food", 150);
-		Map<String, Integer> harkonnen = new HashMap<String, Integer>();
 		harkonnen.put("money", 1000);
 		harkonnen.put("spice", 100);
 		harkonnen.put("iron", 50);
 		harkonnen.put("wood", 200);
 		harkonnen.put("food", 150);
-
-		Map<String, Integer> ferrari = new HashMap<String, Integer>();
 		ferrari.put("money", 1000);
 		ferrari.put("spice", 100);
 		ferrari.put("iron", 50);
 		ferrari.put("wood", 200);
 		ferrari.put("food", 150);
-
-		Map<String, Integer> emperor = new HashMap<String, Integer>();
 		emperor.put("money", 1000);
 		emperor.put("spice", 100);
 		emperor.put("iron", 50);
 		emperor.put("wood", 200);
 		emperor.put("food", 150);
 
-		Map<Integer, String> cMap = new HashMap<Integer, String>();
 		cMap.put(1, "House Atreides");
 		cMap.put(2, "House Harkonnen");
 		cMap.put(3, "House Ferrari");
 		cMap.put(4, "Emperor");
 
-		Map<Integer, String> rMap = new HashMap<Integer, String>();
 		rMap.put(1, "(1) House Atreides MONEY [" + atreides.get("money") + "]");
 		rMap.put(2, "(2) House Harkonnen MONEY [" + harkonnen.get("money") + "]");
 		rMap.put(3, "(3) House Ferrari MONEY [" + ferrari.get("money") + "]");
 		rMap.put(4, "(4) Emperor MONEY [" + emperor.get("money") + "]");
 
-		int[] houseKeys = { 1, 2, 3 };
+		frame = new JFrame("Trading Game");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		panel = new JPanel();
 
-		Scanner scanner = new Scanner(System.in);
-		Random rand = new Random();
+		resourcesLabel = new JLabel();
+		resourcesLabel.setText("Resources:");
+		panel.add(resourcesLabel);
 
-		while (true) {
+		housesLabel = new JLabel();
+		housesLabel.setText("Houses:");
+		panel.add(housesLabel);
 
-			System.out.println("Resources:");
-			System.out.println("- Atreides' Money: " + atreides.get("money"));
-			System.out.println("- Atreides' Spice: " + atreides.get("spice"));
-			System.out.println("- Atreides' Iron: " + atreides.get("iron"));
-			System.out.println("- Atreides' Wood: " + atreides.get("wood"));
-			System.out.println("- Atreides' Food: " + atreides.get("food"));
+		dealsLabel = new JLabel();
+		panel.add(dealsLabel);
 
-			System.out.println("Houses:");
-			System.out.println("- " + rMap.get(1));
-			System.out.println("- " + rMap.get(2));
-			System.out.println("- " + rMap.get(3));
-			System.out.println("- " + rMap.get(4));
-			System.out.println("Choose a house to trade with: ( 2; 3; 4 ) ");
-			int houseChoice = scanner.nextInt();
+		house2Button = new JButton("Trade with House Harkonnen");
+		house2Button.addActionListener(e -> {
+			tradeWithHouse(2);
+		});
+		panel.add(house2Button);
 
-			if (Arrays.stream(houseKeys).noneMatch(x -> x == houseChoice) || houseChoice == 1) {
-				System.out.println("Invalid house choice, please choose again.");
-				continue;
+		house3Button = new JButton("Trade with House Ferrari");
+		house3Button = new JButton("Trade with House Ferrari");
+		house3Button.addActionListener(e -> {
+			tradeWithHouse(3);
+		});
+		panel.add(house3Button);
+		house4Button = new JButton("Trade with Emperor");
+		house4Button.addActionListener(e -> {
+			tradeWithHouse(4);
+		});
+		panel.add(house4Button);
+
+		console = new JTextArea(10, 40);
+		console.setEditable(false);
+		panel.add(console);
+
+		updateLabels();
+
+		frame.getContentPane().add(panel);
+		frame.pack();
+		frame.setVisible(true);
+	}
+
+	private static void updateLabels() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<html>");
+		for (Map.Entry<String, Integer> entry : atreides.entrySet()) {
+			sb.append(entry.getKey()).append(": ").append(entry.getValue()).append("<br>");
+		}
+		sb.append("</html>");
+		resourcesLabel.setText(sb.toString());
+
+		StringBuilder sb2 = new StringBuilder();
+		sb2.append("<html>");
+		for (Map.Entry<Integer, String> entry : cMap.entrySet()) {
+			sb2.append(entry.getKey()).append(". ").append(entry.getValue()).append("<br>");
+		}
+		sb2.append("</html>");
+		housesLabel.setText(sb2.toString());
+	}
+
+	private static void tradeWithHouse(int house) {
+		int playerMoney = atreides.get("money");
+		int playerSpice = atreides.get("spice");
+		int playerIron = atreides.get("iron");
+		int playerWood = atreides.get("wood");
+		int playerFood = atreides.get("food");
+
+		int houseMoney;
+		int houseSpice;
+		int houseIron;
+		int houseWood;
+		int houseFood;
+
+		if (house == 2) {
+			houseMoney = harkonnen.get("money");
+			houseSpice = harkonnen.get("spice");
+			houseIron = harkonnen.get("iron");
+			houseWood = harkonnen.get("wood");
+			houseFood = harkonnen.get("food");
+		} else if (house == 3) {
+			houseMoney = ferrari.get("money");
+			houseSpice = ferrari.get("spice");
+			houseIron = ferrari.get("iron");
+			houseWood = ferrari.get("wood");
+			houseFood = ferrari.get("food");
+		} else {
+			houseMoney = emperor.get("money");
+			houseSpice = emperor.get("spice");
+			houseIron = emperor.get("iron");
+			houseWood = emperor.get("wood");
+			houseFood = emperor.get("food");
+		}
+
+		String tradeItem = (String) JOptionPane.showInputDialog(frame,
+				"What do you want to trade?\nMoney: " + playerMoney + "\nSpice: " + playerSpice + "\nIron: "
+						+ playerIron + "\nWood: " + playerWood + "\nFood: " + playerFood,
+				"Trade", JOptionPane.PLAIN_MESSAGE, null, new String[] { "Money", "Spice", "Iron", "Wood", "Food" },
+				"Money");
+
+		if (tradeItem != null) {
+			int amount = Integer.parseInt(JOptionPane.showInputDialog(frame, "How much do you want to trade?", "Trade",
+					JOptionPane.PLAIN_MESSAGE));
+
+			if (tradeItem.equals("Money")) {
+				if (playerMoney < amount) {
+					console.append("You don't have enough money to make that trade.\n");
+					return;
+				}
+				playerMoney -= amount;
+				houseMoney += amount;
+				atreides.put("money", playerMoney);
+				if (house == 2) {
+					harkonnen.put("money", houseMoney);
+				} else if (house == 3) {
+					ferrari.put("money", houseMoney);
+				} else {
+					emperor.put("money", houseMoney);
+				}
+			} else if (tradeItem.equals("Spice")) {
+				if (playerSpice < amount) {
+					console.append("You don't have enough spice to make that trade.\n");
+					return;
+				}
+				playerSpice -= amount;
+				houseSpice += amount;
+				atreides.put("spice", playerSpice);
+				if (house == 2) {
+					harkonnen.put("spice", houseSpice);
+				} else if (house == 3) {
+					ferrari.put("spice", houseSpice);
+				} else {
+					emperor.put("spice", houseSpice);
+				}
+			} else if (tradeItem.equals("Iron")) {
+				if (playerIron < amount) {
+					console.append("You don't have enough iron to make that trade.\n");
+					return;
+				}
+				playerIron -= amount;
+				houseIron += amount;
+				atreides.put("iron", playerIron);
+				if (house == 2) {
+					harkonnen.put("iron", houseIron);
+				} else if (house == 3) {
+					ferrari.put("iron", houseIron);
+				} else {
+					emperor.put("iron", houseIron);
+				}
+			} else if (tradeItem.equals("Wood")) {
+				if (playerWood < amount) {
+					console.append("You don't have enough wood to make that trade.\n");
+					return;
+				}
+				playerWood -= amount;
+				houseWood += amount;
+				atreides.put("wood", playerWood);
+				if (house == 2) {
+					harkonnen.put("wood", houseWood);
+				} else if (house == 3) {
+					ferrari.put("wood", houseWood);
+				} else {
+					emperor.put("wood", houseWood);
+				}
+			} else if (tradeItem.equals("Food")) {
+				if (playerFood < amount) {
+					console.append("You don't have enough food to make that trade.\n");
+					return;
+				}
+				playerFood -= amount;
+				houseFood += amount;
+				atreides.put("food", playerFood);
+				if (house == 2) {
+					harkonnen.put("food", houseFood);
+				} else if (house == 3) {
+					ferrari.put("food", houseFood);
+				} else {
+					emperor.put("food", houseFood);
+				}
 			}
-
-			String selectedHouse = cMap.get(houseChoice);
-
-			System.out.println("You have chosen to trade with " + selectedHouse);
-
-			Map<String, Integer> selectedHouseResources;
-
-			if (selectedHouse.equals("House Atreides")) {
-				selectedHouseResources = atreides;
-			} else if (selectedHouse.equals("House Harkonnen")) {
-				selectedHouseResources = harkonnen;
-			} else if (selectedHouse.equals("House Ferrari")) {
-				selectedHouseResources = ferrari;
-			} else {
-				selectedHouseResources = emperor;
-			}
-
-			System.out.println("Selected House Resources:");
-			System.out.println("- Money: " + selectedHouseResources.get("money"));
-			System.out.println("- Spice: " + selectedHouseResources.get("spice"));
-			System.out.println("- Iron: " + selectedHouseResources.get("iron"));
-			System.out.println("- Wood: " + selectedHouseResources.get("wood"));
-			System.out.println("- Food: " + selectedHouseResources.get("food"));
-
-			System.out.println("What resource do you want to trade? ( money; spice; iron; wood; food )");
-
-			String tradeResource = scanner.next();
-
-			if (!selectedHouseResources.containsKey(tradeResource)) {
-				System.out.println("Invalid resource choice, please choose again.");
-				continue;
-			}
-
-			System.out.println("Enter the amount to trade:");
-
-			int tradeAmount = scanner.nextInt();
-
-			if (tradeAmount > selectedHouseResources.get(tradeResource)) {
-				System.out.println("Selected house does not have enough of the selected resource.");
-				continue;
-			}
-
-			System.out.println("Confirm trade of " + tradeAmount + " " + tradeResource + " for "
-					+ (tradeAmount * rand.nextInt(50)) + " gold? (y/n)");
-
-			String confirmTrade = scanner.next();
-
-			if (confirmTrade.equals("y")) {
-
-				selectedHouseResources.put(tradeResource, selectedHouseResources.get(tradeResource) - tradeAmount);
-				atreides.put(tradeResource, atreides.get(tradeResource) + tradeAmount);
-				atreides.put("money", atreides.get("money") - (tradeAmount * rand.nextInt(50)));
-
-				System.out.println("Trade successful!");
-
-			} else {
-				System.out.println("Trade cancelled.");
-			}
-
+			console.append("You traded " + amount + " " + tradeItem + " with House " + cMap.get(house) + ".\n");
+			updateLabels();
 		}
 	}
 }
